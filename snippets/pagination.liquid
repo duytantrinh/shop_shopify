@@ -1,0 +1,99 @@
+{% comment %} pg is variable which is passed from template page {% endcomment %}
+{% if pg.pages > 0 %}
+    <nav role="navigation" class="flex justify-center my-8 gap-x-2">
+
+        {% assign current_page = pg.current_page %}
+           {% assign total_pages  = pg.pages %}
+        {% comment %} {# Show 1 page before and after the current page #} {% endcomment %}
+        {% comment %} {% assign range = 1  %}  {% endcomment %}
+        {% comment %} {% assign start_page = current_page | minus: range %}
+        {% assign end_page = current_page | plus: range %} {% endcomment %}
+
+{% comment %}         
+        {% if start_page < 1 %}
+            {% assign adjust = 1 | minus: start_page %}
+            {% assign end_page = end_page | plus: adjust %}
+            {% assign start_page  = 1 %}
+        {% endif %}
+
+        {% if end_page > total_pages %}
+            {% assign adjust = end_page | minus: total_pages %}
+            {% assign start_page = start_page | minus: adjust %}
+            {% assign end_page = total_pages %}
+            {% if start_page < 1 %}
+                {% assign start_page = 1 %}
+            {% endif %}
+        {% endif %} {% endcomment %}
+
+
+         <!-- Previous page spannk (<) -->
+        {% if pg.previous %}
+            <a href="{{  pg.previous.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">{{  pg.previous.title }}</a>
+        {% endif %}
+
+        <!-- page 1 -->
+        {%  if current_page == 1 %}
+            <a href="?page=1" class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm  ">First</a>
+        {% else %}
+            <a href="?page=1" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">First</a>
+        {% endif %}
+
+
+        <!-- ... when current_page > 3 -->
+        {% if current_page > 3 %}
+            <span>...</span>
+        {% endif %}
+
+
+        <!--  // display one page before current page -->
+        {% if current_page != 1 and current_page != 2 %}
+        
+            {%  assign previous_page = current_page | minus: 1   %}
+            <a href="?page={{ previous_page }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">{{ previous_page }}</a>
+        
+           
+        {% endif %}
+
+         <!--  // display current page -->
+        {% if current_page != 1 and current_page != total_pages %}
+            <span class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm ">
+                {{ current_page }}
+            </span>
+           
+        {% endif %}
+
+        
+        <!--  // display one page after current page -->
+        {%  assign before1 = total_pages | minus: 1 %}
+        {% if current_page != total_pages and current_page != before1 %}
+            <span class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">
+                {%  assign next_page = current_page | plus: 1   %}
+                <a href="?page={{ next_page }}" class="pagination__spannk">{{ next_page }}</a>
+            </span>
+           
+        {% endif %}
+       
+        <!-- ...  -->
+        {%  assign before2 = total_pages | minus: 2 %}
+        {% if current_page < before2 %}
+            <span>...</span>
+        {% endif %}
+
+
+        <!-- last page  -->
+        {%  if current_page == total_pages %}
+            <a href="?page={{ total_pages }}" class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm  ">Last</a>
+        {% else %}
+            <a href="?page={{ total_pages }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">Last</a>
+        {% endif %}
+
+
+        <!-- Next page spannk (>) -->
+        {% if pg.next %}
+            <a href="{{  pg.next.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">{{  pg.next.title }}</a>
+        {% endif %} 
+
+
+
+    </nav>
+{% endif %}

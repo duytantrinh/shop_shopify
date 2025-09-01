@@ -24,7 +24,7 @@
                 <div class="flex items-center justify-center">
                     <div class="max-w-7xl text-center">
                         {% if section.settings.enable_published_date %}
-                            <time itemprop="datePublished dateCreated" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" class="text-sm text-blue-400">{{ article.published_at  | date: format: "on_date"  }}</time>
+                            <time itemprop="datePublished dateCreated" datetime="{{ article.published_at | date: '%Y-%m-%d' }}" class="text-sm text-amber-600">{{ article.published_at  | date: format: "on_date"  }}</time>
                         {% endif %}
                     </div>
                 </div>
@@ -53,30 +53,32 @@
 <!----- ========= Comment -->
 {% if blog.comments_enabled? %}
   <div id='comments' class="my-8">
+      <div class="flex-1 items-center justify-center mx-auto max-w-4xl px-4">
     {%  if article.comments_count > 0 %}
-        <div class="flex-1 items-center justify-center mx-auto max-w-4xl px-4">
             <h1 class="text-lg mb-4 font-medium">See what people are saying</h1>
 
             {% comment %} https://shopify.dev/docs/api/liquid/objects/paginate {% endcomment %}
             {% paginate article.comments by 5 %}
-              {% for comment in article.comments %}
-                 <div class="flex-1 border border-gray-300 my-4 px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                    <span class="comment-author">{{ comment.author }}</span> 
-                    <span class="text-xs text-gray-400">{{ comment.created_at | date: format: 'default' }}</span>
-                    <p class="text-sm">{{ comment.content }}</p>
-                </div>
-              {% endfor %}
+                {% for comment in article.comments %}
+                    <div class="flex-1 border border-gray-300 my-4 px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                        <span class="comment-author">{{ comment.author }}</span> 
+                        <span class="text-xs text-gray-400">{{ comment.created_at | date: format: 'default' }}</span>
+                        <p class="text-sm">{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
 
-                <!-- Paginate Button -->
-                {% if paginate.pages > 1 %}
-                    {{ paginate | default_pagination }}
-                {% endif %}
+                <!-- Pagination Button -->
+                <div class="max-w-6xl mx-auto">
+                    {% comment %} pg : name of variable/parameter ==> pass Object paginate  {% endcomment %}
+                    {% render 'pagination', pg:paginate %}
+                </div> 
+
             {% endpaginate %}
            
-        </div>
-    {% else %}
-        <p>There is no comment in this article</p>
-    {% endif %}   
+        {% else %}
+            <p>There is no comment in this article</p>
+        {% endif %}   
+    </div>
     
   </div>
 
