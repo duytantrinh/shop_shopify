@@ -13,10 +13,10 @@
            <form action="{{ routes.cart_url }}" method="POST" novalidate>
                 <table class="table-auto divide-y divide-gray-200 my-4 w-full">
                     <thead>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Product</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500 max-sm:hidden">Info</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Quantity</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-500">Total Price</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Product</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-300 max-sm:hidden">Info</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Quantity</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-300">Total Price</th>
                     </thead>
                     <tbody>
                         {% for item in cart.items %}
@@ -32,8 +32,8 @@
                                 </td>
                                 <td class="py-4 px-2  max-sm:flex max-sm:flex-col max-sm:justify-center">
                                     <a href="{{ item.url }}" class="my-1">{{ item.product.title | truncatewords: 5}}</a>
-                                    <p class="text-sm text-gray-500 my-1">{{ item.options_with_values[0].name }}/{{ item.options_with_values[1].name}}/{{ item.options_with_values[2].name }}</p>
-                                    <p class="text-sm text-gray-500 my-1">{{ item.variant.title }}</p>
+                                    <p class="text-sm text-gray-300 my-1">{{ item.options_with_values[0].name }}/{{ item.options_with_values[1].name}}/{{ item.options_with_values[2].name }}</p>
+                                    <p class="text-sm text-gray-300 my-1">{{ item.variant.title }}</p>
 
                                     {% comment %} &quantity=0 // set quantity == 0 {% endcomment %}
                                     {% comment %} forloop.index : can only use inside for to show the index  {% endcomment %}
@@ -54,7 +54,7 @@
                     <div class="w-full my-4">
                         <div class="flex flex-col items-start">
                             <label for="cart_notes" class="my-1">Cart notes</label>
-                            <textarea name="note" id="cart_notes" class="w-full md:max-w-lg resize-none border h-20 p-2"></textarea>
+                            <textarea name="note" id="cart_notes" class="w-full md:max-w-lg resize-none border h-20 p-2 border-gray-300"></textarea>
                         </div>
                     </div>
 

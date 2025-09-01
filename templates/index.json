@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        // call id "featured_collection" in featured-collection.liquid
+        "featured_collection": "all"
+      }
+    }
+  },
+  "order": ["featured-collection"]
+}

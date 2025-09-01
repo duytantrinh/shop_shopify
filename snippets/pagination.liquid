@@ -1,41 +1,30 @@
 {% comment %} pg is variable which is passed from template page {% endcomment %}
-{% if pg.pages > 0 %}
+{% if pg.pages > 1 %}
     <nav role="navigation" class="flex justify-center my-8 gap-x-2">
 
         {% assign current_page = pg.current_page %}
-           {% assign total_pages  = pg.pages %}
-        {% comment %} {# Show 1 page before and after the current page #} {% endcomment %}
-        {% comment %} {% assign range = 1  %}  {% endcomment %}
-        {% comment %} {% assign start_page = current_page | minus: range %}
-        {% assign end_page = current_page | plus: range %} {% endcomment %}
-
-{% comment %}         
-        {% if start_page < 1 %}
-            {% assign adjust = 1 | minus: start_page %}
-            {% assign end_page = end_page | plus: adjust %}
-            {% assign start_page  = 1 %}
-        {% endif %}
-
-        {% if end_page > total_pages %}
-            {% assign adjust = end_page | minus: total_pages %}
-            {% assign start_page = start_page | minus: adjust %}
-            {% assign end_page = total_pages %}
-            {% if start_page < 1 %}
-                {% assign start_page = 1 %}
-            {% endif %}
-        {% endif %} {% endcomment %}
-
-
+        {% assign total_pages  = pg.pages %}
+   
          <!-- Previous page spannk (<) -->
-        {% if pg.previous %}
-            <a href="{{  pg.previous.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">{{  pg.previous.title }}</a>
+        {% if pg.previous and total_pages > 2 %}
+            <a href="{{  pg.previous.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">
+                {{  pg.previous.title }}</a>
         {% endif %}
+ 
 
         <!-- page 1 -->
         {%  if current_page == 1 %}
-            <a href="?page=1" class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm  ">First</a>
+            <a href="?page=1" class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm  ">
+                    1   
+            </a>
         {% else %}
-            <a href="?page=1" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">First</a>
+            <a href="?page=1" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">
+                {% if total_pages > 2 %}
+                    First
+                {% else %}
+                    1
+                {% endif %}
+            </a>
         {% endif %}
 
 
@@ -82,17 +71,30 @@
 
         <!-- last page  -->
         {%  if current_page == total_pages %}
-            <a href="?page={{ total_pages }}" class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm  ">Last</a>
+            <a href="?page={{ total_pages }}" class="border border-amber-700 bg-amber-500 text-white py-1 px-3 rounded-sm  ">
+                {% if total_pages > 2 %}
+                    Last
+                {% else %}
+                    2
+                {% endif %}
+            </a>
         {% else %}
-            <a href="?page={{ total_pages }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">Last</a>
+            <a href="?page={{ total_pages }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">
+                 {% if total_pages > 2 %}
+                    Last
+                {% else %}
+                    2
+                {% endif %}
+            </a>
         {% endif %}
 
 
         <!-- Next page spannk (>) -->
-        {% if pg.next %}
+       
+        {% if pg.next and total_pages > 2 %}
             <a href="{{  pg.next.url }}" class="border border-gray-600 text-gray-600 hover:bg-gray-600 hover:text-white py-1 px-3 rounded-sm ">{{  pg.next.title }}</a>
         {% endif %} 
-
+       
 
 
     </nav>
