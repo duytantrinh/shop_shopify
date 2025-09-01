@@ -12,5 +12,13 @@
   "dependencies": {
     "@tailwindcss/cli": "^4.1.12",
     "tailwindcss": "^4.1.12"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duytantrinh/shop_shopify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/duytantrinh/shop_shopify/issues"
+  },
+  "homepage": "https://github.com/duytantrinh/shop_shopify#readme"
 }

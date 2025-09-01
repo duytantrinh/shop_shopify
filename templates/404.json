@@ -1,0 +1,13 @@
+{
+  "name": "Template 404",
+  // "layout": "custom_theme", // using layout name: custom_layout
+  // parent div of main body
+  // "wrapper": "div#404_template.custom_class[custom-attribute=hello]",
+  // sections must be an Object
+  "sections": {
+    "template": {
+      "type": "template-404"
+    }
+  },
+  "order": ["template"]
+}
