@@ -32,7 +32,7 @@
             {% when 'featured_image' %}
                 <div itemprop="image" class="max-w-7xl bg-blue-100 rounded-lg mx-2 md:mx-auto overflow-hidden my-4">
                     {% if article.image != blank %}
-                        <img class="w-full h-100 md:h-120 object-cover object-center"  src="{{ article.image |  img_url: "large"}}" alt="{{ article.image.alt }}"  width="350px" height="350px" loading="lazy">
+                        <img class="w-full h-100 md:h-120 object-cover object-center"  src="{{ article.image |  image_url: width: 800}}" alt="{{ article.image.alt }}"  width="350px" height="350px" loading="lazy">
                     {% else %}
                         {% assign placeholder_image = 'lifestyle-1' %}
                         {{ placeholder_image | placeholder_svg_tag: 'w-full h-80 md:h-96 object-cover object-center p-5' }}
@@ -160,6 +160,35 @@
   </div>
 
 {% endif %}
+
+<!-- for SEO: JSON-LD STRUCTURED SCHEMA -->
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type":"BlogPosting",
+    "headline": {{ article.title | json }},
+    "articleBody": {{ article.content | strip_html | json }},
+    {% if article.excerpt != blank %}
+         "description": {{ article.excerpt | strip_html | json }},
+    {% endif %}
+
+    {% if article.image %}
+         "image": [
+            {{ article.image | image_url: width:800  | prepend: "https:" | json }} 
+        ],
+    {%  endif %} 
+    "datePublished": {{ article.published_at | date:format: 'default' | json}},
+    "dateCreated": {{ article.created_at | date:format: 'default' | json}},
+    "author":{
+        "@type":"Person",
+        "name": {{ article.author | json }}
+    },
+    "publisher":{
+        "@type":"Organization",
+        "name": {{ shop.name | json }}
+    }
+}
+</script>
 
 
 {% schema %}
