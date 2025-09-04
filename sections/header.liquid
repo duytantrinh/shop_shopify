@@ -1,7 +1,7 @@
 {%  assign main_menu_linklist = linklists[section.settings.menu].links %}
 <!-- linklists[section.settings.menu].links = linklists.main-menu.links : but now it is flexible based on section.settings -->
 
-<div x-data="{ mobileMenuOpen: false }" class="relative border-b border-gray-600">
+<div x-data="{ mobileMenuOpen: false, searchBarOpen:false }" class="relative border-b border-gray-600">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10 ">
       <!-- STORE NAME / STORE LOGO -->
@@ -25,7 +25,7 @@
               <!-- create variable-->
               {% assign link_handle = link.handle | replace: '-', '_' %}
                 <div x-data="{ {{  link_handle }}: false}" class="relative" >
-                    <button x-on:click="{{  link_handle }} = ! {{ link_handle }}" type="button" class="inline-flex items-center text-base text-gray-400  hover:text-amber-300">
+                    <button x-on:click="{{  link_handle }} = ! {{ link_handle }}" type="button" class="inline-flex items-center text-lg text-gray-400  hover:text-amber-300">
                         {{  link.title }}
                         {% render 'icon-dropdown'  %}
                     </button>
@@ -38,7 +38,7 @@
                             {% for childlink in link.links %}
                               <a href="{{ childlink.url }}" class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100">
                                 <div class="ml-4">
-                                  <p class="text-gray-900 text-base font-medium">
+                                  <p class="text-gray-900 text-lg font-medium">
                                     {{  childlink.title }}
                                   </p>
                                 </div>
@@ -53,7 +53,7 @@
             {% else %}
                   <!-- link No Sub link --> 
                 <div class="relative">
-                    <a href="{{ link.url }}" class="text-base hover:text-amber-300 {% if link.active == true %} text-amber-400 {% else %} text-gray-400 {% endif %}" >{{  link.title }}</a>
+                    <a href="{{ link.url }}" class="text-lg hover:text-amber-300 {% if link.active == true %} text-amber-400 {% else %} text-gray-400 {% endif %}" >{{  link.title }}</a>
                 </div>
             {%  endif %}
 
@@ -62,14 +62,25 @@
       </nav>
 
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-        <a href="{{ routes.cart_url  }}" class="whitespace-nowrap text-base text-gray-600 hover:text-amber-300">
+        <!-- SEARCH -->
+        <button x-on:click="searchBarOpen = true" type="button" class="cursor-pointer w-7 h-7 whitespace-nowrap text-lg text-gray-500 hover:text-amber-300">
+            {% render 'icon-search' %}
+        </button>
+
+            <!-- SHOPPING CART -->
+        <a href="{{ routes.cart_url  }}" class="cursor-pointer whitespace-nowrap text-lg text-gray-600 hover:text-amber-300">
           {% render 'icon-shopping-bag' %}
         </a>
 
         <!-- https://admin.shopify.com/store/cabin-for-rent/settings/customer_accounts?link_source=search#accounts_experience -->
         {% if shop.customer_accounts_enabled %}
-          <a href="{{ routes.account_login_url }}" class="text-base text-gray-400 hover:text-amber-300">Login</a>
-          <a href="{{ routes.account_register_url }}" class="text-base text-gray-400 hover:text-amber-300">Register</a> 
+            {% if customer %}
+                {{ 'Log out'  | customer_logout_link | replace: '<a', '<a class="text-base text-gray-500 hover:text-amber-300"' }} 
+            {% else %}
+                {{  'Log in ' | customer_login_link | replace: '<a', '<a class="text-base text-gray-500 hover:text-amber-300"' }}
+                {{ 'Register' | customer_register_link | replace: '<a', '<a class="text-base text-gray-500 hover:text-amber-300"' }} 
+            {% endif %}  
+        
         {% endif %}
 
       </div>
@@ -81,16 +92,16 @@
 
     <!-- MOBILE MENU CONTAINER -->
   <div class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden" x-show="mobileMenuOpen">
-      <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
-          <div class="p-5 divide-y-2 divide-gray-50">
+      <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-gray-100 w-full">
+          <div class="p-5 divide-y-2 divide-gray-500">
 
               <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
               <div class="flex items-center justify-between pb-3">
                   <div>
-                      <h1 class="text-lg text-gray-600 uppercase font-black">{{  shop.name }}</h1>
+                      <h1 class="text-lg text-gray-800 uppercase font-black">{{  shop.name }}</h1>
                   </div>
                   <div class="-mr-2">
-                      <button x-on:click='mobileMenuOpen = false' type="button" class=" rounded-md p-2 text-gray-600">
+                      <button x-on:click='mobileMenuOpen = false' type="button" class=" rounded-md p-2 text-gray-800">
                           {% render 'icon-close' %}
                       </button>
                   </div>
@@ -107,7 +118,7 @@
                       {% if link.links != blank %}
                         <!-- LInk with sub-->
                         <div x-data="{ {{ link_handle }}: false }" class="relative">
-                          <button x-on:click="{{ link_handle }} = !{{ link_handle }}" type="button" class="text-base text-gray-600 hover:text-amber-300 flex items-center justify-between w-full">
+                          <button x-on:click="{{ link_handle }} = !{{ link_handle }}" type="button" class="text-lg text-gray-600 hover:text-amber-300 flex items-center justify-between w-full">
                             <div>{{  link.title }}</div>
                             {% render 'icon-dropdown' %}
                           </button>
@@ -115,7 +126,7 @@
                             {% for childlink in link.links %}
                              
                                 <a href="{{  childlink.url }}" class="-m-3 p-3 mt-2 flex items-center rounded-md text-gray-600 hover:text-amber-300 hover:bg-gray-50">
-                                    <span class="ml-3 text-base font-medium text-gray-300">{{ childlink.title }}</span>
+                                    <span class="ml-3 text-lg font-medium text-gray-500">{{ childlink.title }}</span>
                                 </a>
                           
                             {% endfor %}
@@ -123,7 +134,7 @@
                         </div>
 
                         {%  else %}
-                          <a href="{{  link.url}}" class="-m-3 p-3 flex items-center rounded-md text-gray-400 hover:text-amber-300 hover:bg-gray-50">
+                          <a href="{{  link.url}}" class="-m-3 p-3 flex items-center rounded-md text-lg text-gray-400 hover:text-amber-300 hover:bg-gray-50">
                               {{  link.title}}
                           </a>
                       {% endif %}
@@ -136,6 +147,25 @@
       </div>
 
   </div>
+
+  <!-- Search Form -->
+  <div x-show="searchBarOpen" class="w-full absolute bg-gray-400 opacity-90 top-0 border z-50">
+      <button type="button" x-on:click="searchBarOpen = false" class="absolute top-0 right-0 mr-5 mt-5 text-gray-500">
+          {% render 'icon-close' %}
+      </button>
+      <div class="h-40 flex justify-center items-center">
+          <form action="{{ routes.search_url }}" method="get" class="flex-auto">
+              <div class="relative text-gray-500 px-10 border">
+                  <!-- name="q" === query -->
+                  <input type="search" name="q" placeholder="Search" class="w-full bg-gray-600 h-10 px-5 pr-10 rounded-full text-lg focus:outline-none text-white">
+                  <button type="submit" class="absolute right-0 top-0 mt-2 mr-2 md:mr-20">
+                      {% render 'icon-search' %}
+                  </button>
+              </div>
+          </form>
+      </div>
+  </div>
+
 </div>
 
 <!-- schema: https://cabin-for-rent.myshopify.com/admin/themes/146505760905/editor?hr=9292 -->

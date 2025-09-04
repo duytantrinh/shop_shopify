@@ -6,7 +6,10 @@
         // call id "featured_collection" in featured-collection.liquid
         "featured_collection": "all"
       }
+    },
+    "hero-banner": {
+      "type": "hero-banner"
     }
   },
-  "order": ["featured-collection"]
+  "order": ["hero-banner", "featured-collection"]
 }

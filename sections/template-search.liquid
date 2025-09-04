@@ -1,0 +1,62 @@
+<div class="container mx-auto">
+      {% assign product_results = search.results | where: "object_type", "product" %}
+      
+    {% paginate search.results by 12 %}
+        <h1 class="text-xl my-4 text-center">Search Results</h1>
+
+        <div class="flex justify-center items-center">
+            <form action="{{ routes.search_url }}" method="get" class="border flex rounded">
+                <input type="search" name="q" placeholder="Search" value="{{ search.terms | escape }}"
+                    class="px-4 py-2 w-80 border-none"
+                >
+
+                <button type="submit" class="bg-gray-800 hover:bg-amber-500 cursor-pointer text-gray-400 border px-4">Search</button>
+            </form>
+        </div>
+
+        {% comment %} always have to check search.performed first {% endcomment %}
+        {% if search.performed %}
+             {% comment %} Only want to search for product {% endcomment %}
+            {% assign product_results = search.results | where: "object_type", "product" %}
+            {% if product_results.size > 0 %}
+            {% comment %} {% if search.results.size > 0 %} {% endcomment %}
+       
+                <div class="max-w-6xl mx-auto">
+                    {% comment %} <p class="text-gray-300 text-lg text-center my-10">{{ search.results.size }} results for the search term {{ search.terms | escape }}</p> {% endcomment %}
+                    <p class="text-gray-300 text-lg text-center my-10">{{ product_results.size }} results for the search term {{ search.terms | escape }}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                            {% for item in product_results %}
+                            
+                                {% render 'product-card', product: item %}
+                                   
+                            {% endfor %}
+                            {% comment %} {% for item in search.results %}
+                                {% case item.object_type %}
+                                    {% when 'product' %}
+                                        {% render 'product-card', product: item %}
+                                    {% else %}
+                                        
+                                {% endcase %}
+                            {% endfor %} {% endcomment %}
+                    
+                    </div>
+                </div>
+          
+                
+            {% else %}
+                <div class="text-center my-4">
+                    <p>No results found for the search term: {{ search.terms | escape }}. Try to use a different keyword</p>
+                </div>
+            {% endif %}
+        {% endif %}
+        
+
+         <!-- Pagination Button -->
+        <div class="max-w-6xl mx-auto">
+            {% comment %} pg : name of variable/parameter ==> pass Object paginate  {% endcomment %}
+            {% render 'pagination', pg:paginate %}
+        </div> 
+
+    {% endpaginate %}
+</div>

@@ -1,0 +1,83 @@
+<div class="max-w-6xl mx-auto mt-8 mb-20 relative">
+    <div class="w-full ">
+        <div class="swiper">
+            <div class="swiper-wrapper ">
+                <!-- Slides -->
+                <div class="swiper-slide">
+                    {% assign banner1 = section.settings.image_with_text_image_1 %}
+                    {% if banner1 %}
+                        <img class="w-full h-[400px]" src="{{ banner1 | image_url: width: 500  }}" alt="banner 1" width="100%" height="400px">
+                    {% else %}
+                        <img class="w-full h-[400px]" src="{{ 'room-1.jpeg' | asset_url }}" alt="Description" alt="banner 1" width="100%" height="400px">
+                    {% endif %} 
+                </div>
+                <div class="swiper-slide">
+                    {% assign banner2 = section.settings.image_with_text_image_2 %}
+                     {% if banner2 %}
+                        <img class="w-full h-[400px]" src="{{ banner2 | image_url: width: 500  }}" alt="banner 1" width="100%" height="400px">
+                    {% else %}
+                        <img class="w-full h-[400px]" src="{{ 'room-2.jpeg' | asset_url }}" alt="Description" alt="banner 1" width="100%" height="400px">
+                    {% endif %} 
+                    
+                </div>
+                <div class="swiper-slide">
+                    {% assign banner3 = section.settings.image_with_text_image_3 %}
+
+                    {% if banner3 %}
+                        <img class="w-full h-[400px]" src="{{ banner3 | image_url: width: 500  }}" alt="banner 1" width="100%" height="400px">
+                    {% else %}
+                        <img class="w-full h-[400px]" src="{{ 'room-3.jpeg' | asset_url }}" alt="Description" alt="banner 1" width="100%" height="400px">
+                    {% endif %} 
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+<script type="module">
+    import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
+    const swiper = new Swiper('.swiper', {
+        direction: 'horizontal',
+loop:true,
+        pagination: {
+            el: '.swiper-pagination'
+        },
+
+        navigation: {
+            prevEl: '.swiper-button-prev',
+            nextEl: '.swiper-button-next'
+        }
+    })
+</script>
+
+{% schema %}
+{
+    "name": "Hero Banner",
+    "settings": [
+        {
+              "type": "image_picker",
+                "id": "image_with_text_image_1",
+                "label": "Image",
+             
+        },
+        {
+              "type": "image_picker",
+                "id": "image_with_text_image_2",
+                "label": "Image"
+        },
+        {
+              "type": "image_picker",
+                "id": "image_with_text_image_3",
+                "label": "Image"
+        },
+
+    ]
+}
+
+{% endschema %}
