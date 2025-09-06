@@ -11,7 +11,7 @@
 
          <!-- Mobile Menu Icon-->
       <div class="-mr-2 -my-2 ml-3 md:hidden">
-        <button x-on:click="mobileMenuOpen = true" type="button" class="p-2 inline-flex items-center justify-center focus:outline-none">
+        <button x-on:click="mobileMenuOpen = true" type="button" class="cursor-pointer p-2 inline-flex items-center justify-center focus:outline-none">
           {% render 'icon-hamburger' %}
         </button>
       </div>
@@ -101,7 +101,7 @@
                       <h1 class="text-lg text-gray-800 uppercase font-black">{{  shop.name }}</h1>
                   </div>
                   <div class="-mr-2">
-                      <button x-on:click='mobileMenuOpen = false' type="button" class=" rounded-md p-2 text-gray-800">
+                      <button x-on:click='mobileMenuOpen = false' type="button" class="cursor-pointer rounded-md p-2 text-gray-800">
                           {% render 'icon-close' %}
                       </button>
                   </div>

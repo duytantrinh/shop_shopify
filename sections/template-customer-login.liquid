@@ -4,6 +4,8 @@
     <div x-show="loginForm" class="max-w-md w-full space-y-8">
         <div>
             <h1 class="text-center text-3xl font-bold mt-6">Sign in to your account</h1>
+            <p class="text-sm text-gray-500">Email: a@gmail.com</p>
+            <p class="text-sm text-gray-500">Pass: test1234</p>
         </div>
         <div class="mt-8">
             {% form 'customer_login' %}
@@ -50,6 +52,24 @@
                 </div>
             {% endform %}
         </div>
+
+        <!-- Checkout AS a Guest-->
+         {% if shop.checkout.guest_login %}
+            <hr class="my-12">
+
+            <div>
+                <h1 class="mt-6 text-center text-3xl font-bold">Continue as a guest</h1>
+            </div>
+
+            {% form 'guest_login' %}
+                <div>
+                    <button type="submit" class="relative w-full py-2 px-4 text-sm font-medium text-white bg-gray-600 hover:bg-amber-400 cursor-pointer">
+                        Continue
+                    </button>
+                </div>
+            {% endform %}
+        {% endif %}
+
     </div>
 
     <!-- RECOVER FORM -->
