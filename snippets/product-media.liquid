@@ -8,10 +8,29 @@
     {% when 'video' %}
         {{ media | video_tag: controls: true, class: 'w-full h-full object-cover' }}
 
-    {% comment %} 3D model {% endcomment %}
+    <!-- 3D model -->
     {% when 'model' %}
-        {{ media | model_viewer_tag }}
+        {% comment %} {{ media | model_viewer_tag }} {% endcomment %}
+        <product-model data-media-id="{{ media.id }}">
+            <div>
+                <button id="productModelOpenButton_{{ media.id }}" x-on:click="productModalOpen = true" class="w-full h-full bg-gray-100 border relative">
+                    <span class="cursor-pointer border bg-gray-100 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        {% render 'icon-model-viewer' %}
+                    </span>
+                    <img 
+                        src="{{ media | image_url: width: 500  }}" 
+                        alt="{{ media.preview_image.alt }}"
+                        class="w-full h-full object-cover"
+                        width="560px"
+                        height="560px"
+                    >
+                </button>
+            </div>
 
+            <template>
+                {{ media | model_viewer_tag: reveal: 'interaction' }}
+            </template>
+        </product-model>
     {% else %}
         {{ media | media_tag }}
         
