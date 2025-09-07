@@ -1,7 +1,7 @@
 {%  assign main_menu_linklist = linklists[section.settings.menu].links %}
 <!-- linklists[section.settings.menu].links = linklists.main-menu.links : but now it is flexible based on section.settings -->
 
-<div x-data="{ mobileMenuOpen: false, searchBarOpen:false }" class="relative border-b border-gray-600">
+<div x-data="{ mobileMenuOpen: false, searchBarOpen:false }" x-cloak class="relative border-b border-gray-600">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10 ">
       <!-- STORE NAME / STORE LOGO -->
@@ -68,7 +68,7 @@
         </button>
 
             <!-- SHOPPING CART -->
-        <a href="{{ routes.cart_url  }}" class="cursor-pointer whitespace-nowrap text-lg text-gray-600 hover:text-amber-300">
+        <a href="{{ routes.cart_url }}" class="cursor-pointer whitespace-nowrap text-lg text-gray-600 hover:text-amber-300">
           {% render 'icon-shopping-bag' %}
         </a>
 
