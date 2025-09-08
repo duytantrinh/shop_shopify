@@ -1,0 +1,136 @@
+<footer class="bg-gray-900 text-white py-[50px] md:py-[80px] border-t-gray-700 border-t">
+    <div class="max-w-6xl mx-auto px-8 md:px-4 grid grid-cols-1 lg:grid-cols-3">
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {% when 'text' %}    
+                    <div class="flex flex-col gap-3 items-start my-5">
+                        <div>
+                            <img src="{{ block.settings.logo  | image_url: width: 200 }}" width="200px" height="200px"  class="w-30 h-20 object-cover">
+                        </div>
+                        <h5>
+                            {{block.settings.title}}
+                        </h5>
+                      
+                        
+                    </div>
+
+
+                {% when 'link_list' %}
+                    <div class="flex flex-col justify-between items-start my-5">
+                     
+                        
+                        <h3 class="text-xl mb-5"> {{  block.settings.title }}</h3>
+
+                    
+                        <ul class="flex flex-col gap-2 text-sm">
+                            {% for link in block.settings.menu.links %}
+                            
+                                <li><a href="{{ link.url }}" class="hover:text-gray-400 {% if link.active %} text-amber-400{% endif %}"> {{ link.title | escape }}</a></li>
+                            {% endfor %}
+                        
+                        </ul>
+                
+                    </div>
+
+              
+                {% else %}
+                <div class="flex flex-col  items-start my-5">
+                
+                        <h3 class="text-xl mb-5"> {{  block.settings.social_media }}</h3>
+                    
+                        <ul class="flex gap-2 text-sm">
+                            {% if block.settings.instagram != blank %}
+                                
+                                <li><a href="{{ block.settings.instagram }}" class="hover:text-gray-400 "> {%   render 'icon-instagram' %}</a></li>
+                            {% endif %}
+                            
+                            {% if block.settings.facebook != blank %}
+                                <li><a href="{{ block.settings.facebook }}" class="hover:text-gray-400 "> {%   render 'icon-facebook' %}</a></li>
+                            {% endif %}
+                            
+                            {% if block.settings.twitter != blank %}
+                                <li><a href="{{ block.settings.twitter }}" class="hover:text-gray-400 "> {%   render 'icon-twitter' %}</a></li>
+                            {% endif %}
+                        
+                        </ul>
+                 
+                    
+                </div>
+            {% endcase %}
+
+           
+        {% endfor %}
+    </div>
+</footer>
+
+
+{% schema %}
+  {
+    "name":"Footer",
+    "blocks": [
+        {
+            "type":"link_list",
+            "name":"Footer Navigation", // use for name of menu
+            "settings": [
+                {
+                    "type":"text",
+                    "id": "title",
+                    "label":"Title",
+                    "default": "Footer menu"
+                },
+                {
+                    "type":"link_list",
+                    "id": "menu",
+                    "label":"Menu"
+                }
+            
+            ],
+        },
+        {
+            "type":"text",
+            "name":"Store Details",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "logo",
+                    "label": "Store Logo"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Heading",
+                    "default": "Cabin For Rent"
+                }
+            ]
+        },
+        {
+            "type":"url",
+            "name":"Social Media",
+            "settings":[
+                 {
+                    "type":"text",
+                    "id": "social_media",
+                    "label":"Social Media",
+                    "default": "Social Media"
+                },
+                {
+                    "type":"url",
+                    "id": "instagram",
+                    "label":"Instagram"
+                },
+                {
+                    "type":"url",
+                    "id": "facebook",
+                    "label":"Facebook"
+                },
+                {
+                    "type":"url",
+                    "id": "twitter",
+                    "label":"twitter"
+                },
+            ]
+        }
+        
+    ]
+  }
+{% endschema %} 

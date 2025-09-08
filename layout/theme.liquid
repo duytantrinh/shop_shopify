@@ -27,7 +27,12 @@
       font-optical-sizing: auto;
       font-weight: 600;
       font-style: normal;
-      color: #D4DEE7
+      color: #D4DEE7;
+      min-height:100vh
+    }
+
+    #main{
+      min-height: calc(100vh - 402px);
     }
 
     [x-cloak] {display:none!important}
@@ -36,8 +41,10 @@
   </head>
   <body class="primary">
     {% section 'header' %}
-    <main role="main" class="p-5">
+    <main id="main" role="main" class="p-5">
       {{ content_for_layout }}
     </main>
+
+    {% section 'footer' %}
   </body>
 </html>
